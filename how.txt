@@ -1,0 +1,286 @@
+if it's ecx and edx its __fastcall
+only ecx its __thiscall
+none its __cdecl
+-------------------------------------
+lua state
+
+string:"WaitingHybridScriptsJob"
+
+xref and decompile
+
+ if ( v3 )
+  {
+    *(_DWORD *)(a1 + 304) = v2;
+    *(_DWORD *)(a1 + 308) = v3;
+    done
+------------------------------------------
+to get luavm_load use string:
+
+oldResult, moduleRef  = ...\nnewResult
+
+and xref it
+
+then it should be the third under call
+
+should look like this 
+int __usercall sub_******@<eax>(int a1@<edx>, char *a2@<ecx>, int a3@<ebp>, const char *a4, int a5)
+
+--------------------------------------------------------------------
+to get taskdefer use string:
+Maximum re-entrancy depth (%i) exceeded calling task.defer
+
+and xref it
+
+and then decompile once u xref and go to the top the addy should look like this
+
+int __cdecl sub_******(int a1)
+-----------------------------------------
+to get top and base search in strings for
+
+Argument 3 missing or nil
+
+xref to it
+
+press x and press ok and then press f5 to decompile and in line 137 or 176 max 
+
+u will find 
+
+top and base the first on is gonna be the top and the 2nd is going to be the base
+-----------------------------------------
+
+to get the print addy search in strings for
+
+Invalid BrowserService Command %s
+
+another string too if the upper one dose not work or som
+
+Video recording started
+
+then double click it and click aInvalidBrowser then press x and press okay
+
+and the first under call click it twice and f5 to decompile
+
+then u got it unsigned int __cdecl sub_******(int a1, int a2, ...) it will be like this              it will be this ^^^^^^
+
+u might not see the __cdecl or other types sometime its ok
+-----------------------------------------
+
+to get spawn addres search
+
+Spawn function requires 1 argument
+
+ in strings and double click it and then click aSpawnFunctionR
+
+ and then press x and okay
+ 
+ then press f5 and go to first line and done thats it it will be like
+
+ int __cdecl sub_******(int a1)
+
+       ^^^^^ this might be diffrent like fastcall or thiscall some lik that
+
+-----------------------------------------
+
+to get psuedo2adr search in strings for
+
+tables cannot be cyclic
+
+then duoble click it and click aTablesCannotBe and press x and press ok
+
+then press f5
+
+and go down till u see something like this:
+
+    break;
+      default:
+        break;
+    }
+  }
+  if ( v5 <= 0 )
+  {
+    if ( v5 <= -10000 )
+      v11 = (char *)sub_*******(v6, v5);
+        it will be this ^^^^^^^  just double click it and u got it
+    else
+      v11 = (char *)(*(_DWORD *)(v6 + 8) + 16 * v5);
+  }
+
+  -----------------------------------------
+to get rbx_getscheduler first search in strings for
+
+SchedulerRate
+
+then click aSchedulerrate and press x and press ok after that
+
+go to the first upper push and doublle click it and decompile it
+
+look for a sub without arguments like sub_******(); should be it
+-----------------------------------------
+to get rbx_getstate search in strings for
+
+challenge
+
+and join it and click aChallenge and press x and press ok
+
+then the first upper push double click it and decompile it
+
+scroll under till you see something like this:
+
+v20 = 0i64;
+  v21 = 0;
+  sub_457A00(this, v17, a3, (int)a4, "challenge", (int *)&v20);
+
+  then click this and decompile       ^^^^^^^^^^    click challenge
+
+  v6 = (volatile signed __int32 *)HIDWORD(v20);
+  if ( HIDWORD(v20) )
+  {
+
+  then scroll under till you see a if statment that looks like this
+
+   if ( *(_DWORD *)a3 != 4 || *(_QWORD *)(a3 + 8) )
+  {
+    if ( byte_3563334 )
+    {
+      v40 = sub_44C4B0(a3, a6);
+      v41 = a2;
+    }
+    else
+    {
+      v40 = sub_44C450(a3);
+     this should ^^^^^^ be it
+    }
+    v42 = a6;
+
+    it might change its not the same as this
+-----------------------------------------
+to get luaO_nilobject just go the psuedo2adr addy and decompile it
+
+and it should look like this
+
+ v2 = **(_DWORD **)a1[7];
+      if ( -10002 - a2 > *(unsigned __int8 *)(v2 + 4) )
+        return &byte_21AFEB8;
+        thats it     ^^^^^^^
+-----------------------------------------
+how to get rbx_pushvfstring first search for string
+
+%s:%d: %s
+
+then click on aSDS_0 and press x and then ok then decompile
+
+it will look like this
+
+    sub_12961F0(*v5);
+    v6 = sub_12A6FC0();
+    return (int *)sub_12961D0(a1, (int)"%s:%d: %s", v51, v6, a2);
+  }         thats it ^^^^^^^^ 
+
+  just decompile it and ur good to go
+  ________________________________________________
+
+  how to get xor addy first search for string
+
+  Variant cast failed
+
+  and click aVariantCastFai and then press x and go to first xref
+
+  after that just go up till you see  
+
+  xorps   xmm1, xmmword_*******
+
+           this will be it^^^^ 
+__________________________________________________________
+
+to get callcheck_1 first serach for string 
+
+ntdll
+
+then click aNtdll and press x and then go to first xref
+
+and the first under mov is the addy it will look like this
+
+ push    offset aNtdll   ; "ntdll"
+ mov     dword_*******, edi
+
+ _________________________________________________________
+
+to get output addy first search for string
+
+Assertion failed: %s\n%s(%d)
+
+then scroll down till you see the first subroutine and decompile it
+
+___________________________________________________________
+
+to get getdatamodel_1
+
+first search for string 
+
+CompletedShutdown
+
+and then go to first xref
+
+and decompile then
+
+go up till u see a if statement that look like this
+
+ if ( v7 )
+    {
+      v8 = *v7;
+      v24 = 1;
+      if ( v8 )
+        MEMORY[0x7564DCB0](v8, 16, 0, 0);
+      v9 = *(_DWORD *)(this + 144);
+      sub_2B5230(0);
+      sub_2B4520(v9, (int)&savedregs);
+      ^^^^^^^^^^ decompile it
+      v10 = *(_DWORD *)(this + 144);
+      *(_DWORD *)(this + 144) = 0;
+
+after that go and look for a sub with arguments you will probably find two
+
+so just click the second one
+
+______________________________________________
+
+
+to get the getdatamodel_2 search for string 
+
+SetupGame
+
+then go to first xref and decompile
+
+the the first under sub should be it
+
+_________________________________________________
+
+to get desrializer first search for string
+
+syntax error: %s
+
+then go to first xref and decompile
+
+go to a sub that will look like this
+
+v39 = sub_2D7CC0(*(_DWORD *)(v37 + 8) + 16, v105, (const char *)&unk_308E633, 0);
+
+sometime its just like this
+
+sub_2D7CC0(&unk_308E633, 0);
+
+and decompile it
+
+go down till u see a sub like this
+
+ }
+        if ( v23 == v18 )
+        {
+          v28 = sub_1299420(v46, v47 - v46, a4);
+                ^^^^^^^^^^^
+          v29 = v46;
+          v49 = (int *)v28;
+          if ( v46 )
+
+and thats desrilalizer
+________________________________________
